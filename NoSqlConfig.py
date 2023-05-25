@@ -11,3 +11,4 @@ class NoSqlConfig:
 
     def getCollection(self, name):
         return self.client['veri_mei'][name]
+    

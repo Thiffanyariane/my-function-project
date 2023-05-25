@@ -14,7 +14,7 @@ import azure.durable_functions as df
 
 
 def orchestrator_function(context: df.DurableOrchestrationContext):
-    result1 = yield context.call_activity('SendMessages', None)
+    result1 = yield context.call_activity('ReceiveMessages', None)
     return [result1]
 
 main = df.Orchestrator.create(orchestrator_function)
