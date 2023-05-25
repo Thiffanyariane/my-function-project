@@ -6,11 +6,14 @@
 # - add azure-functions-durable to requirements.txt
 # - run pip install -r requirements.txt
 
+import time
 import logging
 from ReceiveMessage import ServiceBusReceiver
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 def main(name: str) -> str:
-    from_connection_string = "CHAVE DE ACESSO"
+    from_connection_string = "STRING END POINT AZURE SERVICE BUS"
     queue_name = "etl"
 
     receiver = ServiceBusReceiver(from_connection_string, queue_name)
@@ -22,5 +25,5 @@ def main(name: str) -> str:
         logging.info(f'Mensagem Recebida: {str(message)}')
         receiver.complete_message(message)
 
-    receiver.diconnect()
+    receiver.disconnect()
     return f"Hello {name}!"
