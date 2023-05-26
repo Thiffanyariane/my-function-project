@@ -1,6 +1,5 @@
 import pymongo
 
-
 class MongoDBConfig:
     __instance = None
 
