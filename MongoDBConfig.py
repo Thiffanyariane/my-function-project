@@ -13,5 +13,5 @@ class MongoDBConfig:
         if MongoDBConfig.__instance is not None:
             raise Exception("This class is a singleton! Mongo")
         else:
-            MongoDBConfig.__instance = pymongo.MongoClient("LINK MONGODB")
+            MongoDBConfig.__instance = pymongo.MongoClient("CONNECTION MONGODB")
             

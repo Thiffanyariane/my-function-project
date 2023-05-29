@@ -6,11 +6,15 @@
 # - add azure-functions-durable to requirements.txt
 # - run pip install -r requirements.txt
 
+import logging
+import json
+
 import azure.functions as func
 import azure.durable_functions as df
 
+
 def orchestrator_function(context: df.DurableOrchestrationContext):
-    result1 = yield context.call_activity('ReceiveMessages', None)
+    result1 = yield context.call_activity('DeadLetter', None)
     return [result1]
 
 main = df.Orchestrator.create(orchestrator_function)

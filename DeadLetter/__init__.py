@@ -7,7 +7,7 @@
 # - run pip install -r requirements.txt
 
 import logging
-from ReceiveMessage import ServiceBusReceiver
+from azure.servicebus import ServiceBusClient, ServiceBusSubQueue
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -15,14 +15,12 @@ def main(name: str) -> str:
     from_connection_string = "SERVICEBUS CONNECTION STR"
     queue_name = "parse"
 
-    receiver = ServiceBusReceiver(from_connection_string, queue_name)
-    receiver.connect_str()
+    servicebus_client = ServiceBusClient.from_connection_string(from_connection_string)
+    dlq_receiver = servicebus_client.get_queue_receiver(queue_name, sub_queue=ServiceBusSubQueue.DEAD_LETTER)
 
-    messages = receiver.receive_messages()
-
-    for message in messages:
-        logging.info(f'Mensagem Recebida: {str(message)}')
-        receiver.complete_message(message)
-
-    receiver.disconnect()
+    with dlq_receiver:
+        for message in dlq_receiver:
+            logging.info(f'Mensagem Recebida do Dead Letter')
+            dlq_receiver.complete_message(message)
+    
     return f"Hello {name}!"

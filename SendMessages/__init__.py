@@ -7,8 +7,8 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logging.info("Iniciando o envio de mensagens.")
 
 def main(name: str) -> str:
-    from_connection_string = "STRING END POINT AZURE SERVICE BUS"
-    queue_name = "etl"
+    from_connection_string = "SERVICEBUS CONNECTION STR"
+    queue_name = "parse"
     collection_empresas = NoSqlConfig().getCollection('empresas_mei').find()
 
     list_empresas = list(collection_empresas)
